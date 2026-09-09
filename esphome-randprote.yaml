@@ -1,0 +1,68 @@
+esphome:
+  name: randprote_rf
+  friendly_name: RandProte＆RandRF 门控制器＆射频桥接器
+
+esp32:
+  variant: esp32c3
+  flash_size: 4MB
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+  encryption:
+    key: ""
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: RandomPlay-Prote-Bolt
+    password: !secret RandomPlay-ap
+captive_portal:
+
+# ================= 输出与舵机配置 =================
+
+# 1. 定义 LEDC 输出，用于生成 50Hz 的 PWM 信号控制舵机
+output:
+  - platform: ledc
+    pin: GPIO9
+    id: servo_pwm_output
+    frequency: 50  # SG90 舵机标准控制频率必须为 50Hz
+
+# 2. 定义舵机组件
+servo:
+  - id: door_servo
+    output: servo_pwm_output
+    # 如果实际转动角度不准，可微调以下参数（通常默认值即可）
+    # min_level: 3.0%
+    # idle_level: 7.5%
+    # max_level: 12.0%
+
+# ================= 开关与按钮配置 =================
+
+switch:
+  # 3. 隐藏的 GPIO 开关，用于实际控制引脚电平
+  - platform: gpio
+    pin: GPIO10
+    id: gpio10_internal_switch
+    restore_mode: ALWAYS_ON  # 确保设备启动或重启时，GPIO1 默认为高电平 (ON)
+    internal: true           # 设置为 true，使其在 Home Assistant 中隐藏
+
+  # 4. 插销门锁Bolt 模板开关
+  - platform: template
+    name: "插销门锁Bolt"
+    id: bolt_switch
+    optimistic: true         # 舵机无物理位置反馈，使用乐观模式（假设指令执行成功）
+    turn_on_action:
+      - servo.write:
+          id: door_servo
+          level: -100%
+    turn_off_action:
+      - servo.write:
+          id: door_servo
+          level: 100%
