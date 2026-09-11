@@ -3,7 +3,7 @@
 >
 > 更推荐等待Random-Prote完整项目发布后使用集成化硬件和代码配置
 ## 3D模型展示
-![](https://raw.githubusercontent.com/twelve168/RandomPlay-Prote-Bolt/main/image/QQ20260909-230800.png)
+![](https://raw.githubusercontent.com/twelve168/RandomPlay-Prote-Bolt/main/image/fbdde332aa74129578ad798ee8e8d681.png)
 ![](https://raw.githubusercontent.com/twelve168/RandomPlay-Prote-Bolt/main/image/16AD6027C9B5B06E86AB5AAECC7D391F.jpg)
 - 适配该链接的8寸插销锁：[复制到手机打开pdd跳转](https://mobile.yangkeduo.com/goods.html?ps=e4fEj4HRek)
     - 适配更长尺寸只需在建模软件中修改加长下半部分
